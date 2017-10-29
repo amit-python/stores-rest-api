@@ -1,3 +1,5 @@
+import os # for getting environment var
+
 from flask import Flask
 from flask_restful import Api
 from security import authenticate, identity
@@ -9,7 +11,7 @@ from resources.store import Store, StoreList
 app=Flask(__name__)
 
 #specify database name and path and database type. can use any other sql database as well like postgresql, oracle, etc
-app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] =os.environ.get('DATABASE_URL','sqlite:///data.db') #if first one not found, use 2nd
 
 #a configuration property. related to tracking an object is changed but not saved to database
 #this turns off flask-sqlalchemy modifiction tracker but it does not turn of the sqlalchemy mod tracker which is better
